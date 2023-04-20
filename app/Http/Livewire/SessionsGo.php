@@ -27,6 +27,13 @@ class SessionsGo extends Component
         $this->chat = false;
     }
 
+    public function continueChat()
+    {
+        $this->chat = true;
+        $this->ses = session('wasap_sess');
+        $this->emit('putSession', $this->ses);
+    }
+
     public function render()
     {
         if(session('wasap_sess') == '' || session('wasap_sess') == null)

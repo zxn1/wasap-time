@@ -11,7 +11,7 @@
             <div class="modal-body">
                 <div class="form-group">
                     <label for="exampleInputEmail1">Your session string</label>
-                    <input type="session" class="form-control" id="sessionInput" aria-describedby="session" value="{{$ses}}" placeholder="session">
+                    <input type="session" readonly class="form-control" id="sessionInput" aria-describedby="session" value="{{$ses}}" placeholder="session">
                     <small id="emailHelp" class="form-text text-muted">never share your session with anyone else.</small>
                 </div>
                 <div class="form-group">
@@ -24,13 +24,13 @@
             </div>
         </div>
         @else
-        <div class="jumbotron">
+        <div class="jumbotron" style="margin-top : 15px;">
         <h1 class="display-4">Welcome, back!</h1>
         <p class="lead">Your previous session is...</p>
         <hr class="my-4">
         <p style="font-size : 8px;">{{ session('wasap_sess') }}</p>
         <p class="lead">
-            <button class="btn btn-primary btn-lg" role="button">Continue Chat</button>
+            <button class="btn btn-primary btn-lg" wire:click="continueChat" role="button">Continue Chat</button>
             <button class="btn btn-danger btn-lg" role="button" wire:click="removeSession">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
                     <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z"/>

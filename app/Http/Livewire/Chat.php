@@ -3,10 +3,11 @@
 namespace App\Http\Livewire;
 
 use Livewire\Component;
+use App\Models\Chatting;
 
 class Chat extends Component
 {
-    public $session = null;
+    public $session = null, $chats;
     protected $listeners = ['putSession' => 'setSession'];
 
     public function setSession($sessionVal)
@@ -16,6 +17,7 @@ class Chat extends Component
 
     public function render()
     {
+        $chats = Chatting::limit(10)->get();
         return view('livewire.chat');
     }
 }
