@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use App\Models\randSessions;
+use App\Models\Chatting;
 
 class SessionsGo extends Component
 {
@@ -18,6 +19,10 @@ class SessionsGo extends Component
         $this->emit('putSession', $this->ses);
         session(['wasap_sess' => $this->ses]);
         $this->chat = true;
+        $system = new Chatting;
+        $system->from_id = '111111111111111';
+        $system->messages = $sess->name;
+        $system->save();
     }
 
     public function removeSession()
@@ -31,7 +36,12 @@ class SessionsGo extends Component
     {
         $this->chat = true;
         $this->ses = session('wasap_sess');
+        $sess = randSessions::find($this->ses);
         $this->emit('putSession', $this->ses);
+        $system = new Chatting;
+        $system->from_id = '111111111111111';
+        $system->messages = $sess->name;
+        $system->save();
     }
 
     public function render()

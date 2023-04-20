@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Http\Models\randSessions;
+use App\Models\randSessions;
 
 class Chatting extends Model
 {
@@ -12,7 +12,8 @@ class Chatting extends Model
     protected $table = 'chattings';
     protected $fillable = [
         'from_id',
-        'messages'
+        'messages',
+        'created_at'
     ];
 
     public function randSessions()

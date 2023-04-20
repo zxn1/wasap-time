@@ -7,7 +7,21 @@
     max-width: 600px;
     margin-left: auto;
     margin-right: auto;
-    height : 80vh;
+    height : 75vh;
+    overflow : hidden;
+    overflow-y : scroll;
+}
+
+.chat-input-holder {
+    background-color: #fff;
+    border-radius: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    position : relative;
+    top : -8px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .chat .message {
@@ -59,7 +73,7 @@
 }
 
 .chat .message.received .text {
-    background-color: #fff;
+    background-color: rgb(220, 247, 252);
 }
 
 .chat .message.received .text:after {
@@ -73,7 +87,7 @@
 }
 
 .chat .message.received .avatar {
-    background-color: #b2dfdb;
+    background-color: #c4e0de;
 }
 
 .chat .message.sent .avatar {
@@ -92,5 +106,67 @@
     background-color: #ccc;
     color: #fff;
     font-weight: bold;
+    font-size : 15px;
+    display : block;
+    margin : auto;
     text-align: center;
 }
+
+.chat-input {
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    background-color: #F5F5F5;
+    border-radius: 25px;
+    width: 100%;
+  }
+  
+  .chat-input-field {
+    flex-grow: 1;
+    border: none;
+    background-color: transparent;
+    font-size: 14px;
+    padding: 10px;
+    margin-right: 5px;
+    outline: none;
+  }
+  
+  .chat-send-button {
+    background-color: #0084FF;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all .3s ease-in-out;
+  }
+  
+  .chat-send-button:hover {
+    transform: scale(1.1);
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+  }
+  
+  .fa-paper-plane {
+    margin-left: 1px;
+  }
+  
+  @media only screen and (max-width: 600px) {
+    .chat-input {
+      padding: 5px;
+      border-radius: 20px;
+    }
+    
+    .chat-input-field {
+      font-size: 12px;
+      padding: 8px;
+    }
+    
+    .chat-send-button {
+      width: 35px;
+      height: 35px;
+      font-size: 14px;
+    }
+  }
+  
