@@ -10,6 +10,7 @@
     height : 75vh;
     overflow : hidden;
     overflow-y : scroll;
+    scroll-behavior: smooth;
 }
 
 .chat-input-holder {
@@ -169,4 +170,24 @@
       font-size: 14px;
     }
   }
+
+  .view-more-messages {
+    text-align: center;
+    margin-bottom: 20px;
+  }
   
+  .btn-view-more {
+    background-color: #fff;
+    color: #333;
+    border: 1px solid #333;
+    border-radius: 25px;
+    padding: 5px 20px;
+    font-size: 11px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .btn-view-more:hover {
+    background-color: #333;
+    color: #fff;
+  }

@@ -14,6 +14,11 @@
 </head>
 <body>
 	<div class="chat" wire:poll="getMessage">
+
+        <div wire:click='addLimiter' class="view-more-messages">
+            <button class="btn-view-more">View More Messages</button>
+        </div>     
+
         @foreach($chats as $chat)
 
         @if($chat->from_id == '111111111111111')
