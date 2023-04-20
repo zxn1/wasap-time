@@ -16,3 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('pages.chat');
 });
+
+Route::get('/list', function() {
+    return view('pages.friend');
+});

@@ -1,0 +1,92 @@
+.chat {
+margin: 20px;
+background-color: #fff;
+border-radius: 10px;
+box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+padding: 10px;
+max-width: 600px;
+margin-left: auto;
+margin-right: auto;
+height : 75vh;
+overflow : hidden;
+overflow-y : scroll;
+scroll-behavior: smooth;
+}
+.friend-list {
+list-style: none;
+padding: 0;
+margin: 0;
+}
+
+.friend {
+display: flex;
+align-items: center;
+padding: 10px;
+}
+
+.friend img {
+width: 50px;
+height: 50px;
+margin-right: 10px;
+border-radius: 50%;
+}
+
+.friend .name {
+font-weight: bold;
+margin-right: auto;
+}
+
+.friend button {
+padding: 5px 10px;
+border: none;
+border-radius: 5px;
+font-weight: bold;
+color: #fff;
+cursor: pointer;
+}
+
+.friend .call-btn {
+background-color: #4caf50;
+margin-right: 10px;
+}
+
+.friend .chat-btn {
+background-color: #2196f3;
+}
+
+.search-bar {
+display: flex;
+align-items: center;
+background-color: #f9f9f9;
+padding: 6px;
+border-radius: 20px;
+width: 100%;
+}
+
+.search-bar input[type="text"] {
+border: none;
+background-color: transparent;
+font-size: 14px;
+width: 80%;
+margin-right: 5px;
+color: #333;
+}
+
+.search-bar input[type="text"]::placeholder {
+color: #999;
+}
+
+.search-bar button[type="submit"] {
+background-color: #7898b4;
+border: none;
+padding: 6px;
+border-radius: 50%;
+cursor: pointer;
+color: #fff;
+font-size: 14px;
+margin-left : auto;
+}
+
+.search-bar button[type="submit"]:hover {
+background-color: #3e8e41;
+}

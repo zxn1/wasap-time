@@ -1,5 +1,4 @@
-@extends('root')
-@section('content')
-@livewire('sessions-go')
+@extends('layout')
+@section('contentx')
 @livewire('chat')
 @endsection
