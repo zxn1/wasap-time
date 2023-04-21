@@ -1,8 +1,8 @@
 <div>
-    <div class="video-call-container">
+    <div class="video-call-container" style="margin-top : 5px;">
         <div class="video-container">
-            <video id="local-video" autoplay style='border-radius : 10px;'></video>
-            <video id="remote-video" autoplay style='border-radius : 10px;'></video>
+            <video id="local-video" autoplay style='border-radius : 10px;' autoplay playsinline></video>
+            <video id="remote-video" autoplay style='border-radius : 10px; margin-top : 5px;' autoplay playsinline></video>
         </div>
         <button class="end-call-btn">
             <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-telephone-x-fill" viewBox="0 0 16 16">

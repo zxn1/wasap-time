@@ -20,6 +20,7 @@ class CreateRtcSignallingsTable extends Migration
             $table->string('to_id')->nullable();
             $table->longtext('sdp_offer')->nullable();
             $table->longtext('sdp_answer')->nullable();
+            $table->string('status')->nullable();
             $table->timestamps();
         });
     }

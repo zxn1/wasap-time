@@ -13,6 +13,7 @@ class rtcSignalling extends Model
         'from_id',
         'to_id',
         'sdp_offer',
-        'sdp_answer'
+        'sdp_answer',
+        'status'
     ];
 }

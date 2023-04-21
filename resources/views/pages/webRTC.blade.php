@@ -4,4 +4,5 @@
 </head>
 @section('content')
 @livewire('video-call')
+<script src="/resources/js/webRTC.js"></script>
 @endsection
