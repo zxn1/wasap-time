@@ -20,7 +20,7 @@ var sdpAnswer = null;
 
 
 let init = async () => {
-   localStream = await navigator.mediaDevices.getUserMedia({video:true, audio:false})
+   localStream = await navigator.mediaDevices.getUserMedia({video:true, audio:true})
    document.getElementById('local-video').srcObject = localStream
 }
 

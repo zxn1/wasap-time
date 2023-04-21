@@ -28,19 +28,19 @@
                 <form action="/video-calling" method="POST" style="margin-left : auto;">
                 @csrf
                 <div style="margin-left: auto; width : 165px; min-width : 165px;">
-                        <input hidden type="text" name="from_id" value="{{ session('wasap_sess') }}"/>
-                        <input hidden type="text" name="to_id" value="{{ $list->session_id }}"/>
-                        <button type="submit" class="call-btn">Call&nbsp;
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-camera-video-fill" viewBox="0 0 16 16">
-                                <path fill-rule="evenodd" d="M0 5a2 2 0 0 1 2-2h7.5a2 2 0 0 1 1.983 1.738l3.11-1.382A1 1 0 0 1 16 4.269v7.462a1 1 0 0 1-1.406.913l-3.111-1.382A2 2 0 0 1 9.5 13H2a2 2 0 0 1-2-2V5z"/>
-                            </svg>
-                        </button>
+                    <input hidden type="text" name="from_id" value="{{ session('wasap_sess') }}"/>
+                    <input hidden type="text" name="to_id" value="{{ $list->session_id }}"/>
+                    <button type="submit" class="call-btn">Call&nbsp;
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-camera-video-fill" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M0 5a2 2 0 0 1 2-2h7.5a2 2 0 0 1 1.983 1.738l3.11-1.382A1 1 0 0 1 16 4.269v7.462a1 1 0 0 1-1.406.913l-3.111-1.382A2 2 0 0 1 9.5 13H2a2 2 0 0 1-2-2V5z"/>
+                        </svg>
+                    </button>
 
-                    <button class="chat-btn">Chat
+                    <a class="chat-btn" href="#">Chat
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-left-heart-fill" viewBox="0 0 16 16">
                             <path d="M2 0a2 2 0 0 0-2 2v12.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 12H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2Zm6 3.993c1.664-1.711 5.825 1.283 0 5.132-5.825-3.85-1.664-6.843 0-5.132Z"/>
                         </svg>
-                    </button>
+                    </a>
                 </div>
                 </form>
             </li>

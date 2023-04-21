@@ -11,7 +11,7 @@ class Friendlist extends Component
 
     public function render()
     {
-        $this->lists = randSessions::where('name', 'like', '%' . $this->search . '%')->limit(10)->get();
+        $this->lists = randSessions::where('name', 'like', '%' . $this->search . '%')->where('session_id', '<>', session('wasap_sess'))->limit(10)->get();
         return view('livewire.friendlist');
     }
 }

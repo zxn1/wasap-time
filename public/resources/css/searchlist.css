@@ -45,6 +45,15 @@ color: #fff;
 cursor: pointer;
 }
 
+.friend a {
+    padding: 7px 10px;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    color: #fff;
+    cursor: pointer;
+}
+
 .friend .call-btn {
 background-color: #4caf50;
 margin-right: 10px;

@@ -1,0 +1,46 @@
+.incoming-call {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: white;
+    border-top: 1px solid #ccc;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 99;
+  }
+  
+  .caller-info {
+    display: flex;
+    align-items: center;
+  }
+  
+  .caller-info img {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+  
+  .call-controls button {
+    margin-right: 10px;
+    padding: 10px;
+    font-size: 12px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .accept-btn {
+    background-color: green;
+    color: white;
+    border: none;
+  }
+  
+  .decline-btn {
+    background-color: red;
+    color: white;
+    border: none;
+  }
+  

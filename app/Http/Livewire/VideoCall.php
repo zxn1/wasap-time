@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use App\Models\rtcSignalling;
+use Carbon\Carbon;
 
 class VideoCall extends Component
 {
@@ -34,6 +35,7 @@ class VideoCall extends Component
             $signalling->to_id = $this->to_id;
             $signalling->sdp_offer = $offer;
             $signalling->status = 'ringing';
+            $signalling->created_at = Carbon::now();
             $signalling->save();
         } else {
             $signalling = new rtcSignalling;
@@ -46,6 +48,14 @@ class VideoCall extends Component
         }
     }
 
+    public function closeCall()
+    {
+        $rtc = rtcSignalling::find($this->rtc_id);
+        $rtc->status = 'end';
+        $rtc->save();
+        return redirect('/list');
+    }
+
     public function getSDPAnswer()
     {
         $result = rtcSignalling::where('id', $this->rtc_id)->select('sdp_answer')->first();
@@ -53,6 +63,7 @@ class VideoCall extends Component
             $this->sdp_answer = $result->sdp_answer;
             $this->emit('getSDP', $this->sdp_answer);
         } else {
+            sleep(1);
             $this->emit('getSDP', null);
         }
     }
