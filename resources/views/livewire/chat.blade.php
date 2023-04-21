@@ -46,7 +46,8 @@
 		<div class="message sent">
         <div class="avatar"></div>
 			<div class="text">
-				<p>{{ $chat->messages }}</p>
+                <span style="font-size : 11px; color : rgb(175, 175, 175);">You</span>
+				<p style="position : relative; top : -5px;">{{ $chat->messages }}</p>
 				<div class="time">{{ $chat->created_at }}</div>
 			</div>
 		</div>

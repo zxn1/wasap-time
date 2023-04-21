@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Controller;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,3 +21,6 @@ Route::get('/', function () {
 Route::get('/list', function() {
     return view('pages.friend');
 });
+
+
+Route::post('/video-calling', [Controller::class, 'makeCallingRequest']);
