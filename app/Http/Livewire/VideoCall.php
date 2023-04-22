@@ -51,8 +51,11 @@ class VideoCall extends Component
     public function closeCall()
     {
         $rtc = rtcSignalling::find($this->rtc_id);
-        $rtc->status = 'end';
-        $rtc->save();
+        if($rtc)
+        {
+            $rtc->delete();
+        }
+        
         return redirect('/list');
     }
 

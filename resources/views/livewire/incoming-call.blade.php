@@ -10,9 +10,14 @@
           <p>Incoming call...</p>
         </div>
         <div class="call-controls">
+        <a href="/accept-call">
           <button class="accept-btn">Accept</button>
+        </a>
           <button class="decline-btn">Decline</button>
         </div>
     </div>
+    <audio autoplay>
+        <source src="/resources/ringtones/ayuhtinggalkandia-ring1.mp3" type="audio/mpeg">
+    </audio>
     @endif
 </div>

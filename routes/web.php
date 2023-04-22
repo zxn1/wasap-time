@@ -24,3 +24,8 @@ Route::get('/list', function() {
 
 
 Route::post('/video-calling', [Controller::class, 'makeCallingRequest']);
+
+Route::get('/accept-call', function()
+{
+    return view('pages.acceptWebRTC');
+});

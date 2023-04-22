@@ -15,17 +15,20 @@ const servers = {
   ]
 };
 
+var sdpCaller = null;
+var sdpAnswerCaller = null;
+
 
 let init = async () => {
-   localStream = await navigator.mediaDevices.getUserMedia({video:true, audio:false})
-   document.getElementById('user-1').srcObject = localStream
+   localStream = await navigator.mediaDevices.getUserMedia({video:true, audio:true})
+   document.getElementById('local-video').srcObject = localStream
 }
 
-let createPeerConnection = async (sdpType, MemberId) => {
+let createPeerConnection = async () => {
     peerConnection = new RTCPeerConnection(servers)
 
     remoteStream = new MediaStream()
-    document.getElementById('user-2').srcObject = remoteStream
+    document.getElementById('remote-video').srcObject = remoteStream
 
     localStream.getTracks().forEach((track) => {
         peerConnection.addTrack(track, localStream)
@@ -39,27 +42,16 @@ let createPeerConnection = async (sdpType, MemberId) => {
 
     peerConnection.onicecandidate = async (event) => {
         if(event.candidate){
-            document.getElementById(sdpType).value = JSON.stringify(peerConnection.localDescription)
-            //client.sendMessageToPeer({text:JSON.stringify({'type':'candidate', 'candidate':event.candidate})}, MemberId)
+            sdpAnswerCaller = JSON.stringify(peerConnection.localDescription)
         }
     }
 }
 
-let createOffer = async (MemberId) => {
-    
-    createPeerConnection('offer-sdp', MemberId)
 
-    let offer = await peerConnection.createOffer()
-    await peerConnection.setLocalDescription(offer)
+let createAnswer = async () => {
+    createPeerConnection()
 
-    document.getElementById('offer-sdp').value = JSON.stringify(offer)
-    //client.sendMessageToPeer({text:JSON.stringify({'type':'offer', 'offer':offer})}, MemberId)
-}
-
-let createAnswer = async (MemberId) => {
-    createPeerConnection('answer-sdp', MemberId)
-
-    let offer = document.getElementById('offer-sdp').value
+    let offer = sdpCaller;
     if(!offer) return alert('Retrieve offer from peer first...')
 
     offer = JSON.parse(offer)
@@ -68,24 +60,47 @@ let createAnswer = async (MemberId) => {
     let answer = await peerConnection.createAnswer()
     await peerConnection.setLocalDescription(answer)
 
-    document.getElementById('answer-sdp').value  = JSON.stringify(answer)
-    //client.sendMessageToPeer({text:JSON.stringify({'type':'answer', 'answer':answer})}, MemberId)
+    sdpAnswerCaller = JSON.stringify(answer)
 }
 
-let addAnswer = async () => {
-    let answer = document.getElementById('answer-sdp').value
-    if(!answer) return alert('Retrieve answer from peer first...')
+init();
 
-    answer = JSON.parse(answer)
+//trigger get sdp offer from database
+document.addEventListener('DOMContentLoaded', function() {
+    Livewire.emit('getSDPSender');
+    listenSDPSender();
+});
 
-    if(!peerConnection.currentRemoteDescription){
-        peerConnection.setRemoteDescription(answer)
+//listen for sdp offer
+const listenSDPSender = () => {
+    Livewire.on('getSDPSender', data => {
+        if(data != null)
+        {
+            sdpCaller = data.sdp_offer;
+            Livewire.off('getSDPSender'); //ni memang tak ada function ni. just tuk exit loop
+        }
+    });
+}
+
+//create sdp answer
+const detikListenSDP = setInterval(()=>{
+    if(sdpCaller != null)
+    {
+        createAnswer();
+        clearInterval(detikListenSDP);
     }
+}, 200);
 
+//store the sdp answer to database
+const detikSendingSDPAnswer = setInterval(()=>{
+    if(sdpAnswerCaller != null)
+    {
+        emitSDPAnswer();
+        clearInterval(detikSendingSDPAnswer);
+    }
+}, 200);
+
+//emit to update in database
+const emitSDPAnswer = () => {
+    Livewire.emit('updateAnswer', sdpAnswerCaller);
 }
-
-init()
-
-document.getElementById('create-offer').addEventListener('click', createOffer)
-document.getElementById('create-answer').addEventListener('click', createAnswer)
-document.getElementById('add-answer').addEventListener('click', addAnswer)
