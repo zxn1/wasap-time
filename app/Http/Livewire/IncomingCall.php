@@ -9,13 +9,14 @@ use Carbon\Carbon;
 
 class IncomingCall extends Component
 {
-    public $cur_session, $showCall = 1, $nameCaller;
+    public $cur_session, $showCall = 1, $nameCaller, $rtc_id;
 
     public function getIncomingCall()
     {
         $result = rtcSignalling::where('to_id', $this->cur_session)->where('status', 'ringing')->first();
         if(isset($result))
         {
+            $this->rtc_id = $result->id;
             if($result->created_at->diffInMinutes(Carbon::now()) <= 2)
             {
                 $this->showCall = 2;
@@ -24,6 +25,15 @@ class IncomingCall extends Component
             }
         } else {
             $this->showCall = 1;
+        }
+    }
+
+    public function declineCall()
+    {
+        $rtcSignalling = rtcSignalling::find($this->rtc_id);
+
+        if ($rtcSignalling) {
+            $rtcSignalling->delete();
         }
     }
 

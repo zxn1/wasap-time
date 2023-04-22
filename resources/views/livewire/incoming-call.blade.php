@@ -13,7 +13,7 @@
         <a href="/accept-call">
           <button class="accept-btn">Accept</button>
         </a>
-          <button class="decline-btn">Decline</button>
+          <button wire:click='declineCall' class="decline-btn">Decline</button>
         </div>
     </div>
     <audio autoplay>

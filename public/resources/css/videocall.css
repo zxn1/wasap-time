@@ -37,7 +37,7 @@
     transform: translateX(-50%);
     }
   
-  @media screen and (min-width: 768px) {
+  @media screen and (min-width: 915px) {
     /* Styles for tablets and desktops */
     .video-container {
       flex-direction: row;
