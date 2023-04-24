@@ -20,18 +20,42 @@
         </div>
         <div class="chat-list">
 
+        @foreach($directChat as $item)
+            @if($item->from_id == session('wasap_sess'))
+            <a href="/conversation/{{$item->to_id}}" style="text-decoration: none;">
+            @else
+            <a href="/conversation/{{$item->from_id}}" style="text-decoration: none;">
+            @endif
             <div class="chat-item">
-                <img class="chat-avatar" src="avatar1.jpg" alt="Avatar">
+                @if($item->fromName->name != null)
+                <img class="chat-avatar" src="https://api.dicebear.com/6.x/personas/svg?seed={{$item->fromName->name}}" alt="Avatar">
+                @else
+                <img class="chat-avatar" src="https://api.dicebear.com/6.x/personas/svg?seed={{$item->toName->name}}" alt="Avatar">
+                @endif
+            
                 <div class="chat-info">
-                <h4 class="chat-name">John Doe</h4>
-                <p class="chat-preview">Hey, how are you?</p>
+                @if($item->fromName->name != null)
+                <h4 class="chat-name">{{$item->fromName->name}}</h4>
+                @else
+                <h4 class="chat-name">{{$item->toName->name}}</h4>
+                @endif
+                <p class="chat-preview" style="color: #707070;">
+                @if($item->getLatestMessage[0]->from_id == session('wasap_sess'))
+                you : 
+                @else
+                {{$item->fromName->name}} : 
+                @endif
+                {{$item->getLatestMessage[0]->chat_message}}
+                </p>
                 </div>
                 <div class="chat-meta">
-                <p class="chat-time">12:30 pm</p>
+                <p class="chat-time">{{$item->getLatestMessage[0]->created_at}}</p>
                 <span class="chat-unread"><span style="position : relative; top : -7px; left : -1px;">2</span></span>
                 </div>
             </div>
-            
+            </a>
+        @endforeach
+
         </div>
     </div>
 </div>
