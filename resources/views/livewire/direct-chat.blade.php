@@ -22,7 +22,9 @@
 
         @if($chat->from_id == $session)
 		<div class="message received">
-			<div class="avatar"></div>
+			<div class="avatar" style="overflow : hidden;">
+                <img src="https://api.dicebear.com/6.x/personas/svg?seed={{$chat->randSessions->name}}"/>
+            </div>
 			<div class="text">
                 <span style="font-size : 11px;">{!! '@' !!}{{ $chat->randSessions->name }}</span>
 				<p>{{ $chat->chat_message }}</p>
@@ -31,7 +33,9 @@
 		</div>
         @else
 		<div class="message sent">
-        <div class="avatar"></div>
+            <div class="avatar" style="overflow : hidden;">
+                <img src="https://api.dicebear.com/6.x/personas/svg?seed={{$chat->randSessions->name}}"/>
+            </div>
 			<div class="text">
                 <span style="font-size : 11px; color : rgb(175, 175, 175);">You</span>
 				<p style="position : relative; top : -5px;">{{ $chat->chat_message }}</p>

@@ -21,7 +21,7 @@
         <ul class="friend-list">
             @foreach($onlineList as $list)
             <li class="friend">
-                <img src="https://via.placeholder.com/50" alt="Friend Avatar">
+                <img src="https://api.dicebear.com/6.x/personas/svg?seed={{$list->name}}" alt="Friend Avatar">
                 <div>
                     <span class="name">
                         <svg style="color : #6AD284; position : relative; top : -2px;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-wifi" viewBox="0 0 16 16">
@@ -57,7 +57,7 @@
         <ul class="friend-list">
             @foreach($lists as $list)
             <li class="friend">
-                <img src="https://via.placeholder.com/50" alt="Friend Avatar">
+                <img src="https://api.dicebear.com/6.x/personas/svg?seed={{$list->name}}" alt="Friend Avatar">
                 <div>
                     <span class="name">{{ $list->name }}</span><br>
                     <span style="font-size : 7px;">{{ substr($list->session_id, 0, 15) . '...' }}</span>
@@ -90,7 +90,7 @@
         <ul class="friend-list">
             @foreach($deactivated as $list)
             <li class="friend">
-                <img src="https://via.placeholder.com/50" alt="Friend Avatar">
+                <img src="https://api.dicebear.com/6.x/personas/svg?seed={{$list->name}}" alt="Friend Avatar">
                 <div>
                     <span class="name" style="color : #5A5A5A;">{{ $list->name }}</span><br>
                     <span style="font-size : 7px;">{{ substr($list->session_id, 0, 15) . '...' }}</span>

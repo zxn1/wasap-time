@@ -9,14 +9,19 @@
                 </button>
             </div>
             <div class="modal-body">
+                <div class="text-center">
+                    <img style="margin-bottom : 20px; height : 200px;" src="https://api.dicebear.com/6.x/personas/svg?seed={{$name}}" class="rounded" alt="profile_{{ $name }}">
+                </div>
+
                 <div class="form-group">
                     <label for="exampleInputEmail1">Your session string</label>
                     <input type="session" readonly class="form-control" id="sessionInput" aria-describedby="session" value="{{$ses}}" placeholder="session">
                     <small id="emailHelp" class="form-text text-muted">never share your session with anyone else.</small>
                 </div>
+                
                 <div class="form-group">
                     <label for="name">Your Name</label>
-                    <input type="text" wire:model.defer="name" class="form-control" id="nameInput" placeholder="Name">
+                    <input type="text" wire:model="name" class="form-control" id="nameInput" placeholder="Name">
                 </div>
             </div>
             <div class="modal-footer">
