@@ -20,7 +20,8 @@ Route::get('/', function () {
 })->name('home');
 
 Route::get('/list', function() {
-    if(lastActivity::checkSession())
+    $last_activity = new LastActivity();
+    if($last_activity->checkSession())
     {
         return view('pages.friend');
     } else {

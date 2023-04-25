@@ -20,19 +20,22 @@ class Chat extends Component
 
     public function getMessage()
     {
-        lastActivity::lastAcitivityUpdate();
+        $last_activity = new LastActivity();
+        $last_activity->lastAcitivityUpdate();
         $this->chats = Chatting::latest('id')->limit($this->limiter)->get()->reverse();
     }
 
     public function addLimiter()
     {
-        lastActivity::lastAcitivityUpdate();
+        $last_activity = new LastActivity();
+        $last_activity->lastAcitivityUpdate();
         $this->limiter = $this->limiter + 10;
     }
 
     public function sendMessage()
     {
-        lastActivity::lastAcitivityUpdate();
+        $last_activity = new LastActivity();
+        $last_activity->lastAcitivityUpdate();
         $chatt = new Chatting;
         $chatt->messages = $this->chatInput;
         $chatt->from_id = $this->session;

@@ -62,7 +62,8 @@ class VideoCall extends Component
 
     public function closeCall()
     {
-        lastActivity::lastAcitivityUpdate();
+        $last_activity = new LastActivity();
+        $last_activity->lastAcitivityUpdate();
         $rtc = rtcSignalling::find($this->rtc_id);
         if($rtc)
         {

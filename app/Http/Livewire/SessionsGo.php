@@ -28,7 +28,8 @@ class SessionsGo extends Component
 
     public function removeSession()
     {
-        lastActivity::deactivate();
+        $last_activity = new LastActivity();
+        $last_activity->deactivate();
         $this->ses = '';
         session(['wasap_sess' => '']);
         $this->chat = false;
