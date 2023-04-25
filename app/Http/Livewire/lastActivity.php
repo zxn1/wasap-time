@@ -24,7 +24,10 @@ class LastActivity
     public function deactivate()
     {
         $lastActivty = randSessions::find(session('wasap_sess'));
-        $lastActivty->last_activity = '';
-        $lastActivty->save();
+        if($lastActivty != null)
+        {
+            $lastActivty->last_activity = '';
+            $lastActivty->save();
+        }
     }
 }
