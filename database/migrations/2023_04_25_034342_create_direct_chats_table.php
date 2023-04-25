@@ -4,25 +4,26 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateChattingsTable extends Migration
+class CreateDirectChatsTable extends Migration
 {
     /**
      * Run the migrations.
      *
      * @return void
      */
-
     public function up()
     {
-        Schema::create('chattings', function (Blueprint $table) {
+        Schema::create('direct_chats', function (Blueprint $table) {
             $table->id();
-            $table->string('from_id')->unsigned();
-            $table->string('messages');
+            $table->string('from_id')->nullable();
+            $table->string('to_id')->nullable();
+            $table->string('chatid')->nullable();
             $table->timestamps();
         });
 
-        Schema::table('chattings', function (Blueprint $table) {
+        Schema::table('direct_chats', function (Blueprint $table) {
             $table->foreign('from_id')->references('session_id')->on('rand_sessions');
+            $table->foreign('to_id')->references('session_id')->on('rand_sessions');
         });
     }
 
@@ -33,6 +34,6 @@ class CreateChattingsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('chattings');
+        Schema::dropIfExists('direct_chats');
     }
 }

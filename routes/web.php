@@ -39,11 +39,11 @@ Route::get('/conversation', function() {
     }
 });
 
-Route::get('/conversation/{session}', function() {
+Route::get('/conversation/{session}', function($session) {
     $last_activity = new LastActivity();
     if($last_activity->checkSession())
     {
-        return view('pages.directchat');
+        return view('pages.directchat', ['data' => $session]);
     } else {
         return redirect()->route('home');
     }

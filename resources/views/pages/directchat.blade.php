@@ -4,5 +4,5 @@
 </head>
 @livewire('incoming-call')
 @section('content')
-@livewire('direct-chat')
+@livewire('direct-chat', ['session' => $data])
 @endsection
