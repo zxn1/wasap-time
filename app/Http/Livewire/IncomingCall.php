@@ -31,7 +31,9 @@ class IncomingCall extends Component
 
     public function declineCall()
     {
-        lastActivity::lastAcitivityUpdate();
+        $last_activity = new LastActivity();
+        $last_activity->lastAcitivityUpdate();
+        
         $rtcSignalling = rtcSignalling::find($this->rtc_id);
 
         if ($rtcSignalling) {

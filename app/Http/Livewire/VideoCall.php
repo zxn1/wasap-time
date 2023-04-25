@@ -93,7 +93,9 @@ class VideoCall extends Component
     
     public function render()
     {
-        lastActivity::lastAcitivityUpdate();
+        $last_activity = new LastActivity();
+        $last_activity->lastAcitivityUpdate();
+        
         return view('livewire.video-call');
     }
 }
