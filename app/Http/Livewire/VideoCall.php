@@ -5,10 +5,11 @@ namespace App\Http\Livewire;
 use Livewire\Component;
 use App\Models\rtcSignalling;
 use Carbon\Carbon;
+use App\Http\Livewire\lastActivity;
 
 class VideoCall extends Component
 {
-    public $from_id, $to_id, $rtc_id, $sdp_answer;
+    public $from_id, $to_id, $rtc_id, $sdp_answer, $endCall = false;
 
     protected $listeners = [
         'emitSDP' => 'insertSDPOffer',
@@ -48,8 +49,20 @@ class VideoCall extends Component
         }
     }
 
+    public function getEndCall()
+    {
+        $rtc = rtcSignalling::where('from_id', $this->from_id)->orderBy('id', 'desc')->first();
+        if($rtc != null)
+        {
+            $this->endCall = false;
+        } else {
+            $this->endCall = true;
+        }
+    }
+
     public function closeCall()
     {
+        lastActivity::lastAcitivityUpdate();
         $rtc = rtcSignalling::find($this->rtc_id);
         if($rtc)
         {
@@ -79,6 +92,7 @@ class VideoCall extends Component
     
     public function render()
     {
+        lastActivity::lastAcitivityUpdate();
         return view('livewire.video-call');
     }
 }

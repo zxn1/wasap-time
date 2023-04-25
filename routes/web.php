@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Controller;
+use App\Http\Livewire\lastActivity;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,10 +17,15 @@ use App\Http\Controllers\Controller;
 
 Route::get('/', function () {
     return view('pages.chat');
-});
+})->name('home');
 
 Route::get('/list', function() {
-    return view('pages.friend');
+    if(lastActivity::checkSession())
+    {
+        return view('pages.friend');
+    } else {
+        return redirect()->route('home');
+    }
 });
 
 

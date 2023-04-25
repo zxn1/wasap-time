@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use Livewire\Component;
 use App\Models\randSessions;
 use App\Models\Chatting;
+use App\Http\Livewire\lastActivity;
 
 class SessionsGo extends Component
 {
@@ -27,6 +28,7 @@ class SessionsGo extends Component
 
     public function removeSession()
     {
+        lastActivity::deactivate();
         $this->ses = '';
         session(['wasap_sess' => '']);
         $this->chat = false;

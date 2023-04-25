@@ -4,6 +4,9 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use App\Models\Chatting;
+use App\Models\randSessions;
+use Carbon\Carbon;
+use App\Http\Livewire\lastActivity;
 
 class Chat extends Component
 {
@@ -17,16 +20,19 @@ class Chat extends Component
 
     public function getMessage()
     {
+        lastActivity::lastAcitivityUpdate();
         $this->chats = Chatting::latest('id')->limit($this->limiter)->get()->reverse();
     }
 
     public function addLimiter()
     {
+        lastActivity::lastAcitivityUpdate();
         $this->limiter = $this->limiter + 10;
     }
 
     public function sendMessage()
     {
+        lastActivity::lastAcitivityUpdate();
         $chatt = new Chatting;
         $chatt->messages = $this->chatInput;
         $chatt->from_id = $this->session;

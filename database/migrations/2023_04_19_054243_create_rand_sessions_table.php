@@ -16,6 +16,7 @@ class CreateRandSessionsTable extends Migration
     {
         Schema::create('rand_sessions', function (Blueprint $table) {
             $table->string('session_id')->primary();
+            $table->timestamp('last_activity')->nullable();
             $table->string('name');
             $table->timestamps();
         });

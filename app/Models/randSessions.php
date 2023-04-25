@@ -11,6 +11,7 @@ class randSessions extends Model
     protected $table = 'rand_sessions';
     protected $fillable = [
         'session_id',
+        'last_activity',
         'name'
     ];
     protected $primaryKey = 'session_id';

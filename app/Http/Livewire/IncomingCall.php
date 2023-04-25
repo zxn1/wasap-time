@@ -6,6 +6,7 @@ use Livewire\Component;
 use App\Models\rtcSignalling;
 use App\Models\randSessions;
 use Carbon\Carbon;
+use App\Http\Livewire\lastActivity;
 
 class IncomingCall extends Component
 {
@@ -30,6 +31,7 @@ class IncomingCall extends Component
 
     public function declineCall()
     {
+        lastActivity::lastAcitivityUpdate();
         $rtcSignalling = rtcSignalling::find($this->rtc_id);
 
         if ($rtcSignalling) {
