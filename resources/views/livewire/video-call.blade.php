@@ -1,7 +1,7 @@
 <div>
     <div class="video-call-container" style="margin-top : 5px;">
         @if($endCall != true)
-        <div class="video-container" wire:poll='getEndCall' :interval="3s">
+        <div class="video-container" wire:poll='getEndCall'>
             <video id="local-video" autoplay style='border-radius : 10px;' autoplay playsinline></video>
             <video id="remote-video" autoplay style='border-radius : 10px; margin-top : 5px;' autoplay playsinline></video>
         </div>

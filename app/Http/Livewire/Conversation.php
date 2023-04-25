@@ -7,7 +7,7 @@ use App\Models\directChatt;
 
 class Conversation extends Component
 {
-    public $directChat = [];
+    public $directChat = [], $search = '';
     public function mount()
     {
         $val1 = directChatt::where('from_id', session('wasap_sess'))->get();

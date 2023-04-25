@@ -7,7 +7,7 @@ use App\Models\rtcSignalling;
 
 class AcceptCall extends Component
 {
-    public $rtc_id;
+    public $rtc_id, $endCall = false;
 
     protected $listeners = [
         'getSDPSender' => 'getSenderSDP',
@@ -19,6 +19,17 @@ class AcceptCall extends Component
         $this->rtc_id = $sdp->id;
         sleep(2);
         $this->emit('getSDPSender', $sdp);
+    }
+
+    public function getEndCall()
+    {
+        $rtc = rtcSignalling::where('to_id', session('wasap_sess'))->orderBy('id', 'desc')->first();
+        if($rtc != null)
+        {
+            $this->endCall = false;
+        } else {
+            $this->endCall = true;
+        }
     }
 
     public function updateSDPAnswer($sdpAnswer)

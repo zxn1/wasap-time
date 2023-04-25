@@ -27,14 +27,14 @@
             <a href="/conversation/{{$item->from_id}}" style="text-decoration: none;">
             @endif
             <div class="chat-item">
-                @if($item->fromName->name != null)
+                @if($item->from_id != session('wasap_sess'))
                 <img class="chat-avatar" src="https://api.dicebear.com/6.x/personas/svg?seed={{$item->fromName->name}}" alt="Avatar">
                 @else
                 <img class="chat-avatar" src="https://api.dicebear.com/6.x/personas/svg?seed={{$item->toName->name}}" alt="Avatar">
                 @endif
             
                 <div class="chat-info">
-                @if($item->fromName->name != null)
+                @if($item->from_id != session('wasap_sess'))
                 <h4 class="chat-name">{{$item->fromName->name}}</h4>
                 @else
                 <h4 class="chat-name">{{$item->toName->name}}</h4>
@@ -43,7 +43,7 @@
                 @if($item->getLatestMessage[0]->from_id == session('wasap_sess'))
                 you : 
                 @else
-                {{$item->fromName->name}} : 
+                {{$item->getLatestMessage[0]->randSessions->name}} : 
                 @endif
                 {{$item->getLatestMessage[0]->chat_message}}
                 </p>

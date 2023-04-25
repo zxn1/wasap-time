@@ -19,10 +19,19 @@ var sdpOffer = null;
 var sdpAnswer = null;
 
 
+// let init = async () => {
+//    localStream = await navigator.mediaDevices.getUserMedia({video:true, audio:true})
+//    document.getElementById('local-video').srcObject = localStream
+// }
+
 let init = async () => {
-   localStream = await navigator.mediaDevices.getUserMedia({video:true, audio:true})
-   document.getElementById('local-video').srcObject = localStream
-}
+    try {
+        localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+        document.getElementById('local-video').srcObject = localStream;
+    } catch (error) {
+        alert('Error accessing media devices.');
+    }
+};
 
 let createPeerConnection = async (sdpType) => {
     peerConnection = new RTCPeerConnection(servers)
@@ -74,12 +83,12 @@ init();
 document.addEventListener('DOMContentLoaded', function() {
     Livewire.emit('getSDP');
     const detik = setInterval(()=>{
-        if(document.getElementById('local-video').srcObject != null)
+        if(document.getElementById('local-video').srcObject !== null)
         {
             createOffer();
             clearInterval(detik);
         }
-    }, 100);
+    }, 1000);
 });
 
 //emit sdp offer and store to database
