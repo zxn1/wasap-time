@@ -29,6 +29,25 @@ Route::get('/list', function() {
     }
 });
 
+Route::get('/conversation', function() {
+    $last_activity = new LastActivity();
+    if($last_activity->checkSession())
+    {
+        return view('pages.chatitems');
+    } else {
+        return redirect()->route('home');
+    }
+});
+
+Route::get('/conversation/{session}', function() {
+    $last_activity = new LastActivity();
+    if($last_activity->checkSession())
+    {
+        return view('pages.directchat');
+    } else {
+        return redirect()->route('home');
+    }
+});
 
 Route::post('/video-calling', [Controller::class, 'makeCallingRequest']);
 

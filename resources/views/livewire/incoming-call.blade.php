@@ -1,4 +1,4 @@
-<div wire:poll='getIncomingCall'>
+<div wire:poll="getIncomingCall" interval="2s">
     <head>
         <link rel="stylesheet" href="/resources/css/incomingCall.css">
     </head>
