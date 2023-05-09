@@ -28,7 +28,7 @@
         
         $calculatedHmac = hash_hmac('sha256', $chat->chat_message, $encrypter->getKey());
 
-        if($calculatedHmac != $receivedHmac)
+        if($calculatedHmac === $receivedHmac)
         {
         ?>
 

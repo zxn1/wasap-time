@@ -7,6 +7,9 @@ use App\Models\directChatt;
 use App\Models\chatmessage;
 use Illuminate\Encryption\Encrypter;
 
+use phpseclib\Crypt\RSA;
+use Illuminate\Support\Facades\Storage;
+
 class DirectChat extends Component
 {
     public $session, 
@@ -16,7 +19,7 @@ class DirectChat extends Component
             $messageChats = [], 
             $limiterChat = 15;
     
-    protected $encrypter = null;
+    protected $encrypter = null, $rsa = null;
 
     public function __construct()
     {
@@ -25,6 +28,9 @@ class DirectChat extends Component
         //initialize the encrypter
         $secretHMAC = hex2bin(env("HMEC_SECRET_KEY"));
         $this->encrypter = new Encrypter($secretHMAC, 'AES-256-CBC');
+
+        //create rsa encryption
+        $this->rsa = new RSA();
     }
 
     public function mount()
@@ -71,13 +77,22 @@ class DirectChat extends Component
             $chatbox->save();
         }
 
+        //RSA encryption
+        $publicKey = Storage::get(session('wasap_sess') . '.key');
+        if($publicKey)
+        {
+            $this->messageInput = 'sasa';
+        } else {
+            $this->messageInput = 'tst';
+        }
+
         //assign new message to chatbox or use existed chatbox
-        $chatMessage = new chatmessage;
-        $chatMessage->chat_id = $this->chatID;
-        $chatMessage->from_id = session('wasap_sess');
-        $chatMessage->checkhmac = $hmac;
-        $chatMessage->chat_message = $this->messageInput;
-        $chatMessage->save();
+        // $chatMessage = new chatmessage;
+        // $chatMessage->chat_id = $this->chatID;
+        // $chatMessage->from_id = session('wasap_sess');
+        // $chatMessage->checkhmac = $hmac;
+        // $chatMessage->chat_message = $this->messageInput;
+        // $chatMessage->save();
 
         $this->messageInput = '';
     }
