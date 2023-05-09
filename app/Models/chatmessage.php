@@ -12,6 +12,7 @@ class chatmessage extends Model
     protected $fillable = [
         'chat_id',
         'from_id',
+        'checkhmac',
         'chat_message',
         'created_at'
     ];

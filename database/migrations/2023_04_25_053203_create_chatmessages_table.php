@@ -17,6 +17,7 @@ class CreateChatmessagesTable extends Migration
             $table->id();
             $table->string('chat_id')->nullable();
             $table->string('from_id')->nullable();
+            $table->string('checkhmac')->nullable();
             $table->string('chat_message')->nullable();
             $table->timestamps();
         });
