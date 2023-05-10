@@ -1,7 +1,7 @@
 <div>
     @if($chat == false)
         @if($ses != '')
-        <div class="modal-content" style="margin-top : 100px;">
+        <div class="modal-content mt-5 mb-5">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Set Your Name</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
