@@ -1,3 +1,4 @@
+@if(session('wasap_sess'))
 <div wire:poll="getIncomingCall" interval="2s">
     <head>
         <link rel="stylesheet" href="/resources/css/incomingCall.css">
@@ -21,3 +22,4 @@
     </audio>
     @endif
 </div>
+@endif
