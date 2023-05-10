@@ -38,7 +38,7 @@
             </div>
 			<div class="text">
                 <span style="font-size : 11px;">{!! '@' !!}{{ $chat->randSessions->name }}</span>
-				<p>{{ $chat->chat_message }}</p>
+				<p><?php echo $rsa_member->decrypt($chat->chat_message); ?></p>
 				<div class="time">{{ $chat->created_at }}</div>
 			</div>
 		</div>
@@ -82,7 +82,7 @@
             </div>
 			<div class="text">
                 <span style="font-size : 11px; color : rgb(175, 175, 175);">You</span>
-				<p style="position : relative; top : -5px;">{{ $chat->chat_message }}</p>
+				<p style="position : relative; top : -5px;"><?php echo $rsa_self->decrypt($chat->chat_message); ?></p>
 				<div class="time">{{ $chat->created_at }}</div>
 			</div>
 		</div>
