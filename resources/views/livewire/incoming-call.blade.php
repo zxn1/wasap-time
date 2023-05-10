@@ -1,5 +1,5 @@
 @if(session('wasap_sess'))
-<div wire:poll="getIncomingCall" interval="2s">
+<div wire:poll.6000ms="getIncomingCall">
     <head>
         <link rel="stylesheet" href="/resources/css/incomingCall.css">
     </head>

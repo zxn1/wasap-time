@@ -50,7 +50,9 @@
                 </div>
                 <div class="chat-meta">
                 <p class="chat-time">{{$item->getLatestMessage[0]->created_at}}</p>
-                <span class="chat-unread"><span style="position : relative; top : -7px; left : -1px;">2</span></span>
+                @if(count($item->getCountMessage)!= 0)
+                    <span class="chat-unread" data-toggle="tooltip" data-placement="top" title="({{count($item->getCountMessage)}}) chat is unread"><span style="position : relative; top : -7px; left : -1px;">{{ count($item->getCountMessage) }}</span></span>
+                @endif
                 </div>
             </div>
             </a>

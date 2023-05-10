@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="/resources/css/chat.css">
 </head>
 <body>
-	<div class="chat" wire:poll='getMessage'>
+	<div class="chat" wire:poll.3000ms='getMessage'>
     <div wire:click='viewMoreChat' class="view-more-messages">
         <button class="btn-view-more">View More Messages</button>
     </div>
@@ -38,6 +38,7 @@
             </div>
 			<div class="text">
                 <span style="font-size : 11px;">{!! '@' !!}{{ $chat->randSessions->name }}</span>
+                
 				<p><?php echo $rsa_member->decrypt($chat->chat_message); ?></p>
 				<div class="time">{{ $chat->created_at }}</div>
 			</div>
@@ -84,6 +85,18 @@
                 <span style="font-size : 11px; color : rgb(175, 175, 175);">You</span>
 				<p style="position : relative; top : -5px;"><?php echo $rsa_self->decrypt($chat->chat_message); ?></p>
 				<div class="time">{{ $chat->created_at }}</div>
+
+                @if($chat->have_read == 'seen')
+                <div style="margin-left : 100%;">
+                    <div style="width : 50px; position : relative; right : 40px;">
+                        <svg style="margin-top : 3px;" xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="#6375ab" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                            <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
+                            <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
+                        </svg>
+                        <span class="mr-2" style="font-size : 9px; color : #6375ab;">seen</span>
+                    </div>
+                </div>
+                @endif
 			</div>
 		</div>
         @endif

@@ -33,4 +33,10 @@ class directChatt extends Model
         return $this->hasMany(chatmessage::class, 'chat_id', 'chatid')->orderBy('created_at', 'desc')
         ->limit(1);
     }
+
+    public function getCountMessage()
+    {
+        return $this->hasMany(chatmessage::class, 'chat_id', 'chatid')->orderBy('created_at', 'desc')
+        ->where('have_read', 'received');
+    }
 }

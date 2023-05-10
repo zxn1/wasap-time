@@ -84,6 +84,9 @@ class DirectChat extends Component
             $this->memberPublicKey = Storage::get('public_' . $this->memberPublicKey . '.key');
         }
 
+        //chat opened
+        $this->seenMessage();
+        
         //update last activity
         $last_activity = new LastActivity();
         $last_activity->lastAcitivityUpdate();
@@ -168,6 +171,7 @@ class DirectChat extends Component
     //this function for checking for update - polling
     public function getMessage()
     {
+        //get member public key
         if(!empty($this->memberPublicKey) && $this->memberPublicKey == $this->session)
         {
             //get the member public key
@@ -181,6 +185,26 @@ class DirectChat extends Component
         }
 
         $this->messageChats = chatmessage::latest('id')->where('chat_id', $this->chatID)->limit($this->limiterChat)->get()->reverse();
+
+        //chat opened
+        $this->seenMessage();
+    }
+
+    protected function seenMessage()
+    {
+        //chat opened - update received to seen status
+        $id_received_arr = [];
+
+        for($i = 0; $i < count($this->messageChats); $i++)
+        {
+            if(($this->messageChats[$i]->have_read == 'received') && ($this->messageChats[$i]->from_id == $this->session))
+            {
+                array_push($id_received_arr, $this->messageChats[$i]->id);
+            }
+        }
+
+        //update received to seen
+        chatmessage::whereIn('id', $id_received_arr)->update(['have_read' => 'seen']);
     }
 
     public function render()
