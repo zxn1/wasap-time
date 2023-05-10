@@ -149,13 +149,20 @@ class DirectChat extends Component
         $chatMessage->from_id = session('wasap_sess');
         $chatMessage->checkhmac = $hmac;
         $chatMessage->chat_message = $encrypted_message;
-        $chatMessage->save();
+        
+        if($chatMessage->save())
+        {        
+            if($this->newChat == true)
+            {
+                $this->newChat = false;
+            }
+
+            //update last activity
+            $last_activity = new LastActivity();
+            $last_activity->lastAcitivityUpdate();
+        }
 
         $this->messageInput = '';
-
-        //update last activity
-        $last_activity = new LastActivity();
-        $last_activity->lastAcitivityUpdate();
     }
 
     //this function for checking for update - polling
