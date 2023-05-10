@@ -19,6 +19,7 @@ class CreateChatmessagesTable extends Migration
             $table->string('from_id')->nullable();
             $table->string('checkhmac')->nullable();
             $table->longtext('chat_message')->nullable();
+            $table->enum('have_read', ['seen', 'received'])->default('received');
             $table->timestamps();
         });
 

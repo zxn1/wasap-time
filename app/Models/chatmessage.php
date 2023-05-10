@@ -14,6 +14,7 @@ class chatmessage extends Model
         'from_id',
         'checkhmac',
         'chat_message',
+        'have_read',
         'created_at'
     ];
 
