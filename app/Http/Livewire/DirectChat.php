@@ -5,8 +5,9 @@ namespace App\Http\Livewire;
 use Livewire\Component;
 use App\Models\directChatt;
 use App\Models\chatmessage;
-use Illuminate\Encryption\Encrypter;
+use App\Http\Livewire\lastActivity;
 
+use Illuminate\Encryption\Encrypter;
 use phpseclib\Crypt\RSA;
 use Illuminate\Support\Facades\Storage;
 
@@ -82,11 +83,19 @@ class DirectChat extends Component
         {
             $this->memberPublicKey = Storage::get('public_' . $this->memberPublicKey . '.key');
         }
+
+        //update last activity
+        $last_activity = new LastActivity();
+        $last_activity->lastAcitivityUpdate();
     }
 
     public function viewMoreChat()
     {
         $this->limiterChat = $this->limiterChat + 5;
+
+        //update last activity
+        $last_activity = new LastActivity();
+        $last_activity->lastAcitivityUpdate();
     }
 
     public function sentMessage()
@@ -143,6 +152,10 @@ class DirectChat extends Component
         $chatMessage->save();
 
         $this->messageInput = '';
+
+        //update last activity
+        $last_activity = new LastActivity();
+        $last_activity->lastAcitivityUpdate();
     }
 
     //this function for checking for update - polling
