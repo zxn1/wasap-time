@@ -20,7 +20,8 @@ class DirectChat extends Component
             $messageChats = [], 
             $limiterChat = 15,
             $myPublicKey = null,
-            $memberPublicKey = null;
+            $memberPublicKey = null,
+            $botActivate = false;
     
     //privacy protection - encryption
     protected   $encrypter = null, 
@@ -49,6 +50,11 @@ class DirectChat extends Component
             //load public key to decrypt
             $this->rsa_self->loadKey($this->myPublicKey);
         }
+    }
+
+    public function botInProgress()
+    {
+        $this->botActivate = !$this->botActivate;
     }
 
     public function mount()
@@ -108,7 +114,7 @@ class DirectChat extends Component
         {
             return 0;
         }
-        
+
         if($this->newChat == true)
         {
             //create new chatbox
@@ -136,9 +142,108 @@ class DirectChat extends Component
             Storage::put('public_' . session('wasap_sess') . '.key', $publicKey);
             Storage::put('private_' . session('wasap_sess') . '.key', $privateKey);
         }
+
         //purify the message input
         $this->messageInput = htmlspecialchars($this->messageInput);
 
+        if($this->botActivate == false)
+        { 
+            $this->storeMessageInDB($privateKey);
+        } else {
+            //load public key to decrypt
+            $this->rsa_member->loadKey($this->memberPublicKey);
+
+            //check if count more than 20 chat
+            $countChat = count($this->messageChats);
+            if($countChat > 20)
+            {
+                //do something
+                $countChat = 5;
+                return 0;
+            }
+
+            //get your name and friend name
+            $self_name = null; $friend_name = null;
+            
+            //change fetched model to prompt
+            $prompt = '';
+            for($i = 0; $i < $countChat; $i++)
+            {
+                if($this->messageChats[$i]->from_id == $this->session)
+                {
+                    $friend_name = $this->messageChats[$i]->randSessions->name;
+                    $message = $this->rsa_member->decrypt($this->messageChats[$i]->chat_message);
+
+                    if (strpos($message, '###@$AI_SIFUU_300#@$###:') !== false)
+                    {
+                        $message = str_replace('###@$AI_SIFUU_300#@$###:', '', $message);
+                        $prompt = $prompt . '\nSifuu: ' . $message;
+                    } else {
+                        $prompt = $prompt . '\n' . $friend_name . ': ' . $message;
+                    }
+                } else {
+                    $self_name = $this->messageChats[$i]->randSessions->name;
+                    $prompt = $prompt . '\n' . $this->messageChats[$i]->randSessions->name . ': ' . $this->rsa_self->decrypt($this->messageChats[$i]->chat_message);
+                }
+            }
+            $prompt = $prompt . '\n' . $self_name . ': ' . $this->messageInput;
+
+            //insert the question in database first
+            $this->storeMessageInDB($privateKey);
+
+            //make request to text-davinci-300
+            $response = $this->askSifuu($prompt, $friend_name, $self_name);
+
+            //purify the output
+            //ensure no Sifuu string to be stored in database
+            $response = htmlspecialchars($response);
+            if(strpos($response, 'Sifuu:') !== false)
+            {
+                $response = str_replace('Sifuu:', '', $response);
+            }
+
+            //ensure no ###@$AI_SIFUU_300#@$###: to be stored in database
+            if(strpos($response, '###@$AI_SIFUU_300#@$###:') !== false)
+            {
+                $response = str_replace('###@$AI_SIFUU_300#@$###:', '', $response);
+            }
+
+            //just add in once only
+            $response = '###@$AI_SIFUU_300#@$###:' . $response;
+            
+            //store the output in database as AI
+            //do encryption
+            $this->rsa->loadKey($privateKey);
+            $encrypted_message = $this->rsa->encrypt($response);
+
+            //ensure integrity and authoricity
+            $hmac = hash_hmac('sha256', $encrypted_message, $this->encrypter->getKey());
+
+            //assign new message to chatbox or use existed chatbox
+            $chatMessage = new chatmessage;
+            $chatMessage->chat_id = $this->chatID;
+            $chatMessage->from_id = session('wasap_sess');
+            $chatMessage->checkhmac = $hmac;
+            $chatMessage->chat_message = $encrypted_message;
+            
+            if($chatMessage->save())
+            {        
+                if($this->newChat == true)
+                {
+                    $this->newChat = false;
+                }
+
+                //update last activity
+                $last_activity = new LastActivity();
+                $last_activity->lastAcitivityUpdate();
+            }
+        }
+
+        $this->messageInput = '';
+    }
+
+    protected function storeMessageInDB($privateKey)
+    {
         //do encryption
         $this->rsa->loadKey($privateKey);
         $encrypted_message = $this->rsa->encrypt($this->messageInput);
@@ -164,8 +269,57 @@ class DirectChat extends Component
             $last_activity = new LastActivity();
             $last_activity->lastAcitivityUpdate();
         }
+    }
 
-        $this->messageInput = '';
+    protected function askSifuu($prompt, $friend_name, $self_name)
+    {
+        //get key first from env
+        $apiKey = '';
+
+        // // Initialize a cURL session
+        $endpoint = 'https://api.openai.com/v1/completions';
+
+        // Set the request body
+        $body = [
+            'model' => 'text-davinci-003',
+            'prompt' => 'The following is a conversation with an AI assistant. The assistant is helpful, creative, clever, and very friendly. The AI name is Sifuu.\n'.
+                        $prompt,
+            'max_tokens' => 150,
+            'temperature' => 0.9,
+            'top_p' => 1,
+            'frequency_penalty' => 0,
+            'presence_penalty' => 0.6,
+            'stop'=> [' ' . $friend_name . ':', ' ' . $self_name . ':', ' Sifuu:']
+        ];
+
+        // Set the request headers
+        $headers = [
+            'Content-Type: application/json',
+            'Authorization: Bearer ' . $apiKey,
+        ];
+
+        // Set the request options
+        $options = [
+            'http' => [
+                'method' => 'POST',
+                'header' => implode("\r\n", $headers),
+                'content' => json_encode($body),
+            ],
+        ];
+
+        // Make the request and capture the response
+        try {
+            $response = file_get_contents($endpoint, false, stream_context_create($options));
+        } catch (Exception $ex)
+        {
+            //return inertia('Response', ['response' => 'Failed to retrieve the information!']);
+        }
+
+        // Extract the generated text from the response
+        $res = json_decode($response, true);
+        $text = $res['choices'][0]['text'];
+
+        return $text;
     }
 
     //this function for checking for update - polling
