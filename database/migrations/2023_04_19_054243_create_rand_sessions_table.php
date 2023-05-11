@@ -20,6 +20,11 @@ class CreateRandSessionsTable extends Migration
             $table->string('name');
             $table->timestamps();
         });
+
+        //sini tak boleh nak buat foreign - sebab ada system id '1111111111'
+        // Schema::table('chattings', function (Blueprint $table) {
+        //     $table->foreign('from_id')->references('session_id')->on('rand_sessions');
+        // });
     }
 
     /**

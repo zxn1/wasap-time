@@ -21,10 +21,10 @@ class CreateDirectChatsTable extends Migration
             $table->timestamps();
         });
 
-        Schema::table('direct_chats', function (Blueprint $table) {
-            $table->foreign('from_id')->references('session_id')->on('rand_sessions');
-            $table->foreign('to_id')->references('session_id')->on('rand_sessions');
-        });
+        // Schema::table('direct_chats', function (Blueprint $table) {
+        //     $table->foreign('from_id')->references('session_id')->on('rand_sessions');
+        //     $table->foreign('to_id')->references('session_id')->on('rand_sessions');
+        // });
     }
 
     /**

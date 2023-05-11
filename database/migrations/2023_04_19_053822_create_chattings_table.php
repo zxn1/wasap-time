@@ -16,14 +16,14 @@ class CreateChattingsTable extends Migration
     {
         Schema::create('chattings', function (Blueprint $table) {
             $table->id();
-            $table->string('from_id')->unsigned();
+            $table->string('from_id')->nullable();
             $table->string('messages');
             $table->timestamps();
         });
 
-        Schema::table('chattings', function (Blueprint $table) {
-            $table->foreign('from_id')->references('session_id')->on('rand_sessions');
-        });
+        // Schema::table('chattings', function (Blueprint $table) {
+        //     $table->foreign('from_id')->references('session_id')->on('rand_sessions');
+        // });
     }
 
     /**

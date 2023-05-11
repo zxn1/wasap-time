@@ -1,4 +1,4 @@
-.video-call-container {
+/* .video-call-container {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -36,6 +36,87 @@
     left: 50%;
     transform: translateX(-50%);
     }
+  
+  @media screen and (min-width: 915px) { */
+    /* Styles for tablets and desktops */
+    /* .video-container {
+      flex-direction: row;
+      height: 80%;
+      margin-bottom: 20px;
+    }
+  
+    #local-video,
+    #remote-video {
+      width: 50%;
+      height: 100%;
+      margin: 0 5px;
+    }
+  
+    .end-call-btn {
+      margin-top: 0;
+      border-radius: 50%;
+    }
+  } */
+  
+  .video-call-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+  }
+  
+  .video-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+  
+  #local-video,
+  #remote-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  #local-video {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 25%;
+    height: 25%;
+    object-fit: cover;
+    border: 2px solid white;
+    border-radius: 50%;
+    z-index: 1;
+  }
+  
+  #remote-video {
+    width: 80%;
+    height: auto;
+    max-height: 70%;
+    margin: 10% 0;
+    object-fit: cover;
+    z-index: 0;
+  }
+  
+  .end-call-btn {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
   
   @media screen and (min-width: 915px) {
     /* Styles for tablets and desktops */

@@ -18,14 +18,15 @@ class CreateChatmessagesTable extends Migration
             $table->string('chat_id')->nullable();
             $table->string('from_id')->nullable();
             $table->string('checkhmac')->nullable();
-            $table->longtext('chat_message')->nullable();
+            // $table->longtext('chat_message')->nullable(); //untuk guna database.sqlite
+            $table->binary('chat_message')->nullable();
             $table->enum('have_read', ['seen', 'received'])->default('received');
             $table->timestamps();
         });
 
-        Schema::table('chatmessages', function (Blueprint $table) {
-            $table->foreign('from_id')->references('session_id')->on('rand_sessions');
-        });
+        // Schema::table('chatmessages', function (Blueprint $table) {
+        //     $table->foreign('from_id')->references('session_id')->on('rand_sessions');
+        // });
     }
 
     /**

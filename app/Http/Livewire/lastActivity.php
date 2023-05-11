@@ -26,7 +26,7 @@ class LastActivity
         $lastActivty = randSessions::find(session('wasap_sess'));
         if($lastActivty != null)
         {
-            $lastActivty->last_activity = '';
+            $lastActivty->last_activity = null;
             $lastActivty->save();
         }
     }
