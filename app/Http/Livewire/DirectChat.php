@@ -277,7 +277,7 @@ class DirectChat extends Component
     protected function askSifuu($prompt, $friend_name, $self_name)
     {
         //get key first from env
-        $apiKey = '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';
+        $apiKey = env("CHAT_GPT_KEY");
 
         // // Initialize a cURL session
         $endpoint = 'https://api.openai.com/v1/completions';
