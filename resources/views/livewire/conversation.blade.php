@@ -32,6 +32,23 @@
                 @else
                 <img class="chat-avatar" src="https://api.dicebear.com/6.x/personas/svg?seed={{$item->toName->name}}" alt="Avatar">
                 @endif
+
+                <?php
+                $message_received = $item->getLatestMessage[0]->chat_message; //get chat
+                $botFlag = false;
+
+                //if got bot
+                if(strpos($message_received, '###@$AI_SIFUU_300#@$###:') !== false)
+                {
+                    $botFlag = true;
+                    $message_received = str_replace('###@$AI_SIFUU_300#@$###:', '', $message_received);
+                }
+
+                //too long text make it short
+                if (strlen($message_received) > 20) {
+                    $message_received = substr($message_received, 0, 20) . "...";
+                }
+                ?>
             
                 <div class="chat-info">
                 @if($item->from_id != session('wasap_sess'))
@@ -39,13 +56,29 @@
                 @else
                 <h4 class="chat-name">{{$item->toName->name}}</h4>
                 @endif
+
                 <p class="chat-preview" style="color: #707070;">
+                
+                <?php
+                if($botFlag == true)
+                {
+                    echo 'Sifuu :';
+                } else {
+                ?>
                 @if($item->getLatestMessage[0]->from_id == session('wasap_sess'))
                 you : 
                 @else
                 {{$item->getLatestMessage[0]->randSessions->name}} : 
                 @endif
-                {{$item->getLatestMessage[0]->chat_message}}
+                <?php
+                }
+                ?>
+
+                <?php
+                //sini
+                echo $message_received;
+                ?>
+
                 </p>
                 </div>
                 <div class="chat-meta">

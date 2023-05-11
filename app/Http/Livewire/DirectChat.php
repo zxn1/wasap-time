@@ -155,12 +155,14 @@ class DirectChat extends Component
 
             //check if count more than 20 chat
             $countChat = count($this->messageChats);
-            if($countChat > 20)
-            {
-                //do something
-                $countChat = 5;
-                return 0;
-            }
+
+            //next update for performance
+            // if($countChat > 20)
+            // {
+            //     //do something
+            //     $countChat = 5;
+            //     return 0;
+            // }
 
             //get your name and friend name
             $self_name = null; $friend_name = null;
@@ -173,20 +175,22 @@ class DirectChat extends Component
                 {
                     $friend_name = $this->messageChats[$i]->randSessions->name;
                     $message = $this->rsa_member->decrypt($this->messageChats[$i]->chat_message);
-
-                    if (strpos($message, '###@$AI_SIFUU_300#@$###:') !== false)
-                    {
-                        $message = str_replace('###@$AI_SIFUU_300#@$###:', '', $message);
-                        $prompt = $prompt . '\nSifuu: ' . $message;
-                    } else {
-                        $prompt = $prompt . '\n' . $friend_name . ': ' . $message;
-                    }
+                    $prompt = $prompt . '\n' . $friend_name . ': ' . $message;
                 } else {
                     $self_name = $this->messageChats[$i]->randSessions->name;
                     $prompt = $prompt . '\n' . $this->messageChats[$i]->randSessions->name . ': ' . $this->rsa_self->decrypt($this->messageChats[$i]->chat_message);
                 }
             }
             $prompt = $prompt . '\n' . $self_name . ': ' . $this->messageInput;
+
+            //remove unnecessary from the code
+            if (strpos($prompt, $self_name . ': ###@$AI_SIFUU_300#@$###:') !== false)
+            {
+                $prompt = str_replace($self_name . ': ###@$AI_SIFUU_300#@$###:', 'Sifuu:', $prompt);
+            } else if(strpos($prompt, $friend_name . ': ###@$AI_SIFUU_300#@$###:') !== false)
+            {
+                $prompt = str_replace($friend_name . ': ###@$AI_SIFUU_300#@$###:', 'Sifuu:', $prompt);
+            }
 
             //insert the question in database first
             $this->storeMessageInDB($privateKey);
@@ -196,7 +200,6 @@ class DirectChat extends Component
 
             //purify the output
             //ensure no Sifuu string to be stored in database
-            $response = htmlspecialchars($response);
             if(strpos($response, 'Sifuu:') !== false)
             {
                 $response = str_replace('Sifuu:', '', $response);
@@ -274,7 +277,7 @@ class DirectChat extends Component
     protected function askSifuu($prompt, $friend_name, $self_name)
     {
         //get key first from env
-        $apiKey = '';
+        $apiKey = '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';
 
         // // Initialize a cURL session
         $endpoint = 'https://api.openai.com/v1/completions';
