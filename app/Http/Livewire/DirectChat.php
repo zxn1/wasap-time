@@ -226,6 +226,7 @@ class DirectChat extends Component
             $chatMessage = new chatmessage;
             $chatMessage->chat_id = $this->chatID;
             $chatMessage->from_id = session('wasap_sess');
+            $chatMessage->have_read = 'seen';
             $chatMessage->checkhmac = $hmac;
             $chatMessage->chat_message = $encrypted_message;
             
