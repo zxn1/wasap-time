@@ -37,6 +37,6 @@ class directChatt extends Model
     public function getCountMessage()
     {
         return $this->hasMany(chatmessage::class, 'chat_id', 'chatid')->orderBy('created_at', 'desc')
-        ->where('have_read', 'received');
+        ->where('have_read', 'received')->where('from_id', '<>', session('wasap_sess'));
     }
 }
